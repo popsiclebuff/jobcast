@@ -1,0 +1,7 @@
+<IfModule authz_core_module>
+RewriteEngine on
+RewriteCond $1 !^(index\.php|circlecrop\.php|images|js|profile_pictures|fonts|stylesheets|robots\.txt)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L,QSA]
+</IfModule>

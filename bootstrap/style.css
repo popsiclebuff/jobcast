@@ -1,0 +1,87 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{
+	background-image:url('../image/LoginBG.jpg');
+	//-webkit-background-size: cover;
+ // -moz-background-size: cover;
+ // background-size: cover;
+ background-size: 100% 120%;
+ background-repeat: no-repeat;
+  background-position:fixed;
+}
+
+.form-signin {
+    max-width: 500px;
+    padding: 19px 29px 29px;
+    margin: 0 auto;
+	//margin-top:90px;
+   
+	
+   
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+       -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            box-shadow: 0 1px 2px rgba(0,0,0,.05);
+			
+	font-family:Tahoma, Geneva, sans-serif;
+	color:#990000;
+	font-weight:lighter;
+}
+
+.form-signin .form-signin-heading{
+    color:white;
+	font-size: 50px;
+}
+
+
+
+.signin-form, .body-container
+{
+	//border:solid red 1px;
+	margin-top:110px;
+	
+}
+.navbar-brand{
+	font-family:"Lucida Handwriting";
+}
+#btn-submit{
+	height:45px;
+}
+.h5{
+	font-family:Verdana, Geneva, sans-serif;
+}
+h1{
+	font-family:Verdana, Geneva, sans-serif;
+}
+.left-inner-addon {
+    position: relative;
+}
+.left-inner-addon input {
+    padding-left: 40px;
+	height: 45px;    
+}
+.left-inner-addon i {
+    position: absolute;
+    padding: 10px 12px;
+    pointer-events: none;
+	font-size:20px;
+	color:black;
+}
+
+.bottomright{
+	position:absolute;
+	bottom:0;
+	right:0;
+}
+
+table tr[data-href] {
+    cursor: pointer;
+}
+.table:hover
+{
+    background-color: blue;
+
+}
