@@ -210,34 +210,27 @@ class Main extends CI_Controller {
 
 	}
 	public function manage_app(){
-
-
 		if(!$this->session->userdata('logged_in')) // condition if the session is empty
    		 {
 			redirect(base_url());
-		 }else{
+		 } else{
 		 	$session_data = $this->session->userdata('logged_in'); // condition if the session is in set
      		$data['user_id'] = $session_data['user_id'];
      		$id = $session_data['user_id'];
 
 			$upd = $this->uri->segment(3);
 			$upid = $this->uri->segment(4);
-	
-			 		if ($upd == "manage") {
-				 			
-					 	if($this->access_data->updatestatus("apply_tbl","userBook = 1","apply_id =".$upid)){
-							redirect(base_url().'Main/book_manage'); //altered tibay
-							}
-					 }else if($upd == "decline"){
-
-					 if($this->access_data->updatestatus("apply_tbl","userDel = 1","apply_id =".$upid)){
-							redirect(base_url().'Main/notify'); //altered tibay
-							}
-						
-					 }
-			
+	 		if ($upd == "manage") {
+			 	if($this->access_data->updatestatus("apply_tbl","userBook = 1","apply_id =".$upid)){
+					redirect(base_url().'Main/book_manage'); //altered tibay
+				}
+			 } else if($upd == "decline") {
+	               if($this->access_data->updatestatus("apply_tbl","userDel = 1","apply_id =".$upid)){
+					redirect(base_url().'Main/notify'); //altered tibay
+				}
+				
+			 }
      	}
-
 	}
 
      //tibay start make
@@ -293,12 +286,15 @@ class Main extends CI_Controller {
                if ($logtype == "Company") {
                     $tbl = "registered";
 
-                    $aply1 = $this->access_data->getdata("*","apply_tbl","compID = ".$id." AND userBook = 0");
+                    $aply1 = $this->access_data->getdata("*","apply_tbl","compID = ".$id);
+                    
                     $data['aply'] = $this->compnoty();
 
                     foreach ($aply1 as $ap) {}
-                         
-                    $data['aplicnt'] = $this->access_data->report_feleter("(SELECT prog_list FROM program WHERE prog_id = student.course) as program,apply_tbl.*,student.*, company_post.job_title","apply_tbl","INNER JOIN student ON student.userID = apply_tbl.userID INNER JOIN company_post ON company_post.post_id = apply_tbl.postID WHERE apply_tbl.compID = $id AND userBook = 0 AND apply_tbl.userDel = 0", "apply_tbl.apply_id");  
+                    // print_r($ap);die;
+                    
+                    $data['aplicnt'] = $this->access_data->getApplicants($id);
+                    // $data['aplicnt'] = $this->access_data->report_feleter("(SELECT prog_list FROM program WHERE prog_id = student.course) as program,apply_tbl.*,student.*, company_post.job_title","apply_tbl","INNER JOIN student ON student.userID = apply_tbl.userID INNER JOIN company_post ON company_post.post_id = apply_tbl.postID WHERE apply_tbl.compID = $id AND userBook = 0 AND apply_tbl.userDel = 0", "apply_tbl.apply_id");  
                
 
                }else{

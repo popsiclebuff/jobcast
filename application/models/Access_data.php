@@ -82,5 +82,35 @@ function getdata($field, $table, $where=''){ // query without join
         $row = $this->db->get_where('apply_tbl', $where)->first_row('array');
         return !empty($row) && $row['userDel'] == 0;
      }
+     function accepted($userID, $postID, $compID) {
+        $where = array("userID" => $userID, "postID" => $postID, "compID" => $compID);
+        $row = $this->db->get_where('apply_tbl', $where)->first_row('array');
+        return !empty($row) && $row['userBook'] == 1;
+     }
+     function declined($userID, $postID, $compID) {
+        $where = array("userID" => $userID, "postID" => $postID, "compID" => $compID);
+        $row = $this->db->get_where('apply_tbl', $where)->first_row('array');
+        return !empty($row) && $row['userDel'] == 1;
+     }
+
+     function getApplicants($compID) {
+        $sql = "SELECT 
+                    s.*,
+                    cp.job_title,
+                    at.apply_id,
+                    p.prog_list as program
+                FROM 
+                    company_post cp 
+                LEFT JOIN
+                    apply_tbl at ON at.postID = cp.post_id 
+                LEFT JOIN 
+                    student s ON s.userID = at.userID
+                LEFT JOIN 
+                    program p ON s.course = p.prog_id 
+                WHERE 
+                    cp.id = $compID AND apply_id IS NOT NULL";
+
+        return $this->db->query($sql)->result();
+     }
 
 }

@@ -28,7 +28,7 @@ class Welcome extends CI_Controller {
 			$password = '111';
 			$logintype = 'Student';
 
-			// $user = 'alliance';
+			// $user = 'accenture';
 			// $password = '123';
 			// $logintype = 'Company';
 			$qrt = $this->login_model->validate($user,$password,$logintype); // pass the $email and $password to the validate function from login_model.php

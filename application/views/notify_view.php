@@ -5,7 +5,17 @@
 		cursor: default;
 		background-color: #9E9E9E;
 	}
-	
+
+	.btn.green.pull-right.accepted {
+		cursor: default;
+		background-color: #00BAFF;
+	}
+
+	.btn.btn-danger.pull-right.declined {
+		pointer-events: none;
+		cursor: default;
+	}
+
 </style>
 <div class="clearfix">
 </div>
@@ -47,22 +57,40 @@ echo $msg;
 									Delete <i class="fa fa-close"></i>
 									</a> -->
 
-								<?php $applied_db = $this->access_data->applied($user_id, $job_list->post_id, $job_list->id);?>
+								<?php 
+									$accepted = $this->access_data->accepted($user_id, $job_list->post_id, $job_list->id);
+									$declined = $this->access_data->declined($user_id, $job_list->post_id, $job_list->id);
+									$applied_db = $this->access_data->applied($user_id, $job_list->post_id, $job_list->id);	
+								?>
 								<?php 
 								    $text = "Apply Now";
-									$applied = ""; 
+									$btn = "btn green"; 
 									$title = "Apply Now!";
-									if($applied_db) {
-										$text ="Already Applied";
-									 	$applied = "applied" ;
+									$icon = "fa fa-check";
+									if($declined) {
+								 		$text ="Declined";
+									 	$btn = "btn btn-danger declined";
 									 	$title = "Check your email"; 
-									} 
+									 	$icon = "fa fa-close";
+								 	} else {
+										if($applied_db) {
+										 	if($accepted) {
+										 		$text ="Accepted";
+											 	$btn = "btn green accepted";
+											 	$title = "Check your email"; 
+										 	} else {
+										 		$text ="Already Applied";
+											 	$btn = "btn green applied" ;
+											 	$title = "Check your email"; 
+										 	}
+										} 
+								 	}
 								?>	
 								<a href="<?php echo base_url('Main/book/').''.$user_id.'/'.$job_list->post_id.'/'.$job_list->id."/".$job_list->category_id; ?>" class="btn blue pull-right">
 									Book <i class="fa fa-plus"></i>
 									</a>
-								<a class="btn green pull-right <?=$applied; ?>" href="<?php echo base_url('Main/notify/').''.$user_id.'/'.$job_list->post_id.'/'.$job_list->id."/apply"; ?>" title = "<?=$title?>" >
-									<?=$text; ?> <i class="fa fa-check"></i>
+								<a <?php echo $applied_db && $accepted ? "onclick='return false;'" : ""; ?>  class="pull-right <?=$btn; ?>" href="<?php echo base_url('Main/notify/').''.$user_id.'/'.$job_list->post_id.'/'.$job_list->id."/apply"; ?>" title = "<?=$title?>" >
+									<?=$text; ?> <i class="<?=$icon; ?>"></i>
 									</a>
 									
 								</div>
@@ -133,7 +161,6 @@ echo $msg;
 				      </div>
 				    </div>
 				  </div>
-				</div>
 			<?php } } ?>
 		
 			
