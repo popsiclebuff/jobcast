@@ -93,14 +93,22 @@ function getdata($field, $table, $where=''){ // query without join
         return !empty($row) && $row['userDel'] == 1;
      }
 
-     function getApplicants($compID) {
+     function getApplicants($compID, $apply_id = null) {
+        $cond = "cp.id = $compID AND apply_id IS NOT NULL";
+        if(!is_null($apply_id)) {
+            $cond = "at.apply_id = $apply_id";
+        }
         $sql = "SELECT 
                     s.*,
                     cp.job_title,
+                    r.fname as company_name,
+                    r.email as company_email,
                     at.apply_id,
                     p.prog_list as program
                 FROM 
                     company_post cp 
+                LEFT JOIN
+                    registered r ON r.userID = cp.id 
                 LEFT JOIN
                     apply_tbl at ON at.postID = cp.post_id 
                 LEFT JOIN 
@@ -108,9 +116,13 @@ function getdata($field, $table, $where=''){ // query without join
                 LEFT JOIN 
                     program p ON s.course = p.prog_id 
                 WHERE 
-                    cp.id = $compID AND apply_id IS NOT NULL";
+                    $cond";
 
+        if(!is_null($apply_id)) {
+            return $this->db->query($sql)->first_row();
+        }                 
         return $this->db->query($sql)->result();
      }
+
 
 }

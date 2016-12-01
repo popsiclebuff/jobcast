@@ -221,9 +221,15 @@ class Main extends CI_Controller {
 			$upd = $this->uri->segment(3);
 			$upid = $this->uri->segment(4);
 	 		if ($upd == "manage") {
-			 	if($this->access_data->updatestatus("apply_tbl","userBook = 1","apply_id =".$upid)){
+			 	// if($this->access_data->updatestatus("apply_tbl","userBook = 1","apply_id =".$upid)){
+                         $company_and_applicant = $this->access_data->getApplicants($id, $upid);
+                         // echo "<pre>";
+                         // print_r($company_and_applicant);die;
+                         $company = array('email' => $company_and_applicant->company_email, 'fname' => $company_and_applicant->company_name);
+                         $student = array('email' => $company_and_applicant->email, 'fname' => $company_and_applicant->fname);
+                         $this->sendEmail($company, $student);
 					redirect(base_url().'Main/book_manage'); //altered tibay
-				}
+				// }
 			 } else if($upd == "decline") {
 	               if($this->access_data->updatestatus("apply_tbl","userDel = 1","apply_id =".$upid)){
 					redirect(base_url().'Main/notify'); //altered tibay
@@ -233,6 +239,28 @@ class Main extends CI_Controller {
      	}
 	}
 
+     public function sendEmail($company, $user) {
+          $config['protocol']     = 'smtp';
+          $config['smtp_host']    = 'ssl://smtp.gmail.com';
+          $config['smtp_port']    = '465';
+          $config['smtp_timeout'] = '7';
+          $config['smtp_user']    = 'irisjohansenecempron@gmail.com';
+          $config['smtp_pass']    = 'pokol888';
+          $config['charset']      = 'utf-8';
+          $config['newline']      = "\r\n";
+          $config['mailtype']     = 'html'; // or html
+          $config['validation']   = TRUE; // bool whether to validate email or not  
+
+
+          $this->load->library('email', $config);
+          $this->email->set_newline("\r\n");
+          $this->email->from($company['email'], $company['fname']);
+          $this->email->to($user['email']); 
+
+          $this->email->subject('Job Application');
+          $this->email->message('Hello '.$user['fname'].','.'<br>Your job application is accepted. Please come in the office for your interview and examination as soon as possible. Please bring your resume.');  
+          $this->email->send();
+     }
      //tibay start make
      public function delete_notif(){
 

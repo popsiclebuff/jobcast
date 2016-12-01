@@ -24,13 +24,13 @@ class Welcome extends CI_Controller {
 			$password = $this->input->post('password');// pass to the email variable what in the POST name=EnterPass
 			$logintype = $this->input->post('logtype');
 			
-			$user = 'iris';
-			$password = '111';
-			$logintype = 'Student';
+			// $user = 'iris';
+			// $password = '111';
+			// $logintype = 'Student';
 
-			// $user = 'accenture';
-			// $password = '123';
-			// $logintype = 'Company';
+			$user = 'alliance';
+			$password = '123';
+			$logintype = 'Company';
 			$qrt = $this->login_model->validate($user,$password,$logintype); // pass the $email and $password to the validate function from login_model.php
 
 			//$base = "D:/PROGRAM/xampp/htdocs/mobile_app/admin/uploads/";
