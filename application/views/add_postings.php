@@ -65,6 +65,14 @@
                 <option value="<?php echo $category->cat_id; ?>"><?php echo $category->title; ?></option>
               <?php  } ?>
               </select>
+               <?php foreach ($jobs as $category) { ?>
+                <select id="<?=$category->cat_id;?>" name="program">
+                  <?php $programs = $this->access_data->getProgramByCategoryID($category->cat_id);?>
+                <?php foreach ($programs as $program) { ?>
+                  <option value="<?php echo $program->prog_id; ?>"><?php echo $prog->prog_list; ?></option>
+                <?php  } ?>
+                </select>
+               <?php  } ?>
             </div>
           </div>
           <div class="form-group col-lg-12">

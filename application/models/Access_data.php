@@ -124,5 +124,11 @@ function getdata($field, $table, $where=''){ // query without join
         return $this->db->query($sql)->result();
      }
 
+     function getProgramByCategoryID($cat_id) {
+        $where = array("cat_id" => $cat_id);
+        $rows = $this->db->get_where('program', $where)->result();
+        return $rows;
+     }
+
 
 }

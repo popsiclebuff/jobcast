@@ -221,7 +221,7 @@ class Main extends CI_Controller {
 			$upd = $this->uri->segment(3);
 			$upid = $this->uri->segment(4);
 	 		if ($upd == "manage") {
-			 	// if($this->access_data->updatestatus("apply_tbl","userBook = 1","apply_id =".$upid)){
+			 	if($this->access_data->updatestatus("apply_tbl","userBook = 1","apply_id =".$upid)){
                          $company_and_applicant = $this->access_data->getApplicants($id, $upid);
                          // echo "<pre>";
                          // print_r($company_and_applicant);die;
@@ -229,7 +229,7 @@ class Main extends CI_Controller {
                          $student = array('email' => $company_and_applicant->email, 'fname' => $company_and_applicant->fname);
                          $this->sendEmail($company, $student);
 					redirect(base_url().'Main/book_manage'); //altered tibay
-				// }
+				}
 			 } else if($upd == "decline") {
 	               if($this->access_data->updatestatus("apply_tbl","userDel = 1","apply_id =".$upid)){
 					redirect(base_url().'Main/notify'); //altered tibay
